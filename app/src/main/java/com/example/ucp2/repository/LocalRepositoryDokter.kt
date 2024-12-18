@@ -11,7 +11,7 @@ class LocalRepositoryDokter (
         dokterDao.insertDokter(dokter)
     }
 
-    override fun getAllDktr(): Flow<List<Dokter>> {
+    override fun getAllDokter(): Flow<List<Dokter>> {
         return dokterDao.getAllDokter()
     }
 

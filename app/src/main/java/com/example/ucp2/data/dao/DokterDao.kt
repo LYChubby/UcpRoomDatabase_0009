@@ -16,6 +16,6 @@ interface DokterDao {
     fun getAllDokter(): Flow<List<Dokter>>
 
     @Query("SELECT * FROM dokter WHERE id = :id")
-    fun getDokterById(id: String): Flow<Dokter?>
+    fun getDokterById(id: Int): Flow<Dokter?>
 
 }

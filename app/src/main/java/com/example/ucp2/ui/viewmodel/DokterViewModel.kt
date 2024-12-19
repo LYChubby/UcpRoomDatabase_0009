@@ -1,14 +1,30 @@
 package com.example.ucp2.ui.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.Dokter
+import com.example.ucp2.repository.RepositoryDokter
+import kotlinx.coroutines.launch
+
+
+object IDGenerator {
+    private var currentId = 0
+    fun generateId(): Int {
+        currentId += 1
+        return currentId
+    }
+}
 
 data class DokterEvent(
-    val id: Int,
-    val nama: String,
-    val spesialis: String,
-    val klinik: String,
-    val telepon: String,
-    val jamKerja: String
+    val id: Int = IDGenerator.generateId(),
+    val nama: String = "",
+    val spesialis: String = "",
+    val klinik: String = "",
+    val telepon: String = "",
+    val jamKerja: String = ""
 )
 
 fun DokterEvent.toDokterEntity(): Dokter = Dokter (
@@ -31,5 +47,72 @@ data class FormErrorState(
     fun isValid(): Boolean {
         return id == null && nama == null && spesialis == null &&
                 klinik == null && telepon == null && jamKerja == null
+    }
+}
+
+data class DokterUIState(
+    val dokterEvent: DokterEvent = DokterEvent(),
+    val isEntryValid: FormErrorState = FormErrorState(),
+    val snackbarMessage: String? = null
+)
+
+class DokterViewModel(
+    private val repositoryDokter: RepositoryDokter
+): ViewModel() {
+
+    var uiState: DokterUIState by mutableStateOf(DokterUIState())
+
+    fun updateState(dokterEvent: DokterEvent) {
+        uiState = uiState.copy(
+            dokterEvent = dokterEvent
+        )
+    }
+
+    private fun validateInput(): Boolean  {
+        val event = uiState.dokterEvent
+        val errorState = FormErrorState(
+            nama = if (event.nama.isEmpty()) "Nama Tidak Boleh Kosong" else null,
+            spesialis = if (event.spesialis.isEmpty()) "Spesialis Tidak Boleh Kosong" else null,
+            klinik = if (event.klinik.isEmpty()) "Klinik Tidak Boleh Kosong" else null,
+            telepon = if (event.telepon.isEmpty()) "Telepon Tidak Boleh Kosong" else null,
+            jamKerja = if (event.jamKerja.isEmpty()) "Jam Kerja Tidak Boleh Kosong" else null
+        )
+
+        uiState = uiState.copy(
+            isEntryValid = errorState
+        )
+
+        return errorState.isValid()
+    }
+
+    fun saveDokter() {
+        val currentDokterEvent = uiState.dokterEvent
+
+        if (validateInput()) {
+            viewModelScope.launch {
+                try {
+                    repositoryDokter.insertDokter(currentDokterEvent.toDokterEntity())
+                    uiState = uiState.copy(
+                        dokterEvent = DokterEvent(),
+                        isEntryValid = FormErrorState(),
+                        snackbarMessage = "Dokter Berhasil Disimpan"
+                    )
+                } catch (e: Exception) {
+                    uiState = uiState.copy(
+                        snackbarMessage = "Dokter Gagal Disimpan"
+                    )
+                }
+            }
+        } else {
+            uiState = uiState.copy(
+                snackbarMessage = "Input Tidak Valid. Periksa Kembali Data Anda"
+            )
+        }
+    }
+
+    fun resetSnackbarMessage() {
+        uiState = uiState.copy(
+            snackbarMessage = null
+        )
     }
 }

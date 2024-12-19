@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mvvmdatabase"
+    namespace = "com.example.ucp2"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.mvvmdatabase"
+        applicationId = "com.example.ucp2"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

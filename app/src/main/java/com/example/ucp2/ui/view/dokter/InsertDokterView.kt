@@ -3,23 +3,35 @@ package com.example.ucp2.ui.view.dokter
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.Spesialis
 import com.example.ucp2.navigation.AlamatNavigasi
 import com.example.ucp2.ui.customwidget.DynamicSelectedField
+import com.example.ucp2.ui.customwidget.TopAppBar
 import com.example.ucp2.ui.viewmodel.DokterEvent
 import com.example.ucp2.ui.viewmodel.DokterUIState
+import com.example.ucp2.ui.viewmodel.DokterViewModel
 import com.example.ucp2.ui.viewmodel.FormErrorState
+import com.example.ucp2.ui.viewmodel.PenyediaViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun FormDokter(
@@ -134,4 +146,55 @@ fun InsertBodyDokter(
 
 object DestinasiInsertDokter : AlamatNavigasi {
     override val route = "insert_dokter"
+}
+
+@Composable
+fun InsertDokterView(
+    onBack: () -> Unit,
+    onNavigate: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: DokterViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val uiState = viewModel.uiState
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect (uiState.snackbarMessage){
+        uiState.snackbarMessage?.let { message ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(message)
+                viewModel.resetSnackbarMessage()
+            }
+        }
+    }
+
+    Scaffold (
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ){
+        padding ->
+        Column (
+            modifier = modifier.fillMaxWidth()
+                .padding(padding)
+                .padding(16.dp)
+        ){
+            TopAppBar(
+                onBack = onBack,
+                showBackButton = true,
+                judul = "Tambah Dokter"
+            )
+            InsertBodyDokter(
+                uiState = uiState,
+                onValueChange = {updatedEvent ->
+                    viewModel.updateState(updatedEvent)
+                },
+                onSaveClick = {
+                    coroutineScope.launch {
+                        viewModel.saveDokter()
+                    }
+                    onNavigate()
+                }
+            )
+        }
+    }
 }

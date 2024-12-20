@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -104,7 +105,14 @@ fun CardDokter (
                 Text(
                     text = dokter.spesialis,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = when (dokter.spesialis) {
+                        "Dokter Gigi" -> Color.Yellow
+                        "Dokter Jantung" -> Color.Red
+                        "Dokter Mata" -> Color.Green
+                        "Dokter Kecantikan" -> Color.Blue
+                        else -> Color.Black
+                    }
                 )
             }
             Row (
@@ -206,6 +214,7 @@ fun BodyHomeDokterView(
 fun HomeDokterView(
     viewModel: HomeAppViewModel = viewModel(factory = PenyediaViewModel.Factory),
     onAddDokter: () -> Unit = { },
+    onJadwal: () -> Unit = { },
     onCardClick: (String) -> Unit = { },
     modifier: Modifier = Modifier
 ) {
@@ -230,7 +239,7 @@ fun HomeDokterView(
                     painter = painterResource(R.drawable.fri),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(55.dp)
                         .clip(CircleShape)
                         .border(2.dp, Color.White, CircleShape)
                 )
@@ -256,7 +265,7 @@ fun HomeDokterView(
             // Search Box
             OutlinedTextField(
                 value = "",
-                onValueChange = { /* Tambahkan aksi */ },
+                onValueChange = {  },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -285,14 +294,16 @@ fun HomeDokterView(
                 Button(
                     onClick = { onAddDokter() },
                     modifier = Modifier.weight(0.5f)
-                        .padding(end = 5.dp)
+                        .padding(end = 5.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0A3C81))
                 ) {
                     Text(text = "Tambah Dokter")
                 }
                 Button(
-                    onClick = { onAddDokter() },
+                    onClick = { onJadwal() },
                     modifier = Modifier.weight(0.5f)
-                        .padding(start = 5.dp)
+                        .padding(start = 5.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0A3C81))
                 ) {
                     Text(text = "Lihat Jadwal")
                 }

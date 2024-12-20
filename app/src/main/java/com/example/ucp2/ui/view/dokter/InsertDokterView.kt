@@ -41,7 +41,6 @@ fun FormDokter(
     modifier: Modifier = Modifier
 ){
 
-    var choosenDropdown by remember { mutableStateOf("") }
     Column (
         modifier = modifier.fillMaxWidth()
     ){
@@ -62,7 +61,7 @@ fun FormDokter(
 
         DynamicSelectedField(
             selectedValue = dokterEvent.spesialis,
-            options = Spesialis.option,
+            options = Spesialis.option.toString(),
             label = "Spesialis",
             onValueChangedEvent = {
                 onValueChange(dokterEvent.copy(spesialis = it))

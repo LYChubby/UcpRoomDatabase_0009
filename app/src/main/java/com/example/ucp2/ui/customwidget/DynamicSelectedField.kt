@@ -1,6 +1,5 @@
 package com.example.ucp2.ui.customwidget
 
-import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,7 +20,7 @@ import com.example.ucp2.data.Spesialis.option
 @Composable
 fun DynamicSelectedField(
     selectedValue: String,
-    options: List<String>,
+    options: String,
     label: String,
     onValueChangedEvent: (String) -> Unit,
     modifier: Modifier = Modifier

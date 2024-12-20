@@ -203,6 +203,7 @@ fun BodyHomeJadwalView(
 fun HomeJadwalView(
     viewModel: JadwalAppViewModel = viewModel(factory = PenyediaViewModel.Factory),
     onAddJadwal: () -> Unit = { },
+    onDokter: () -> Unit = { },
     onDetailClick: (String) -> Unit = { },
     modifier: Modifier = Modifier
 ) {
@@ -285,15 +286,15 @@ fun HomeJadwalView(
                         .padding(end = 5.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0A3C81))
                 ) {
-                    Text(text = "Tambah Dokter")
+                    Text(text = "Tambah Jadwal")
                 }
                 Button(
-                    onClick = { onAddJadwal() },
+                    onClick = { onDokter() },
                     modifier = Modifier.weight(0.5f)
                         .padding(start = 5.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0A3C81))
                 ) {
-                    Text(text = "Lihat Jadwal")
+                    Text(text = "Lihat Dokter")
                 }
 
             }

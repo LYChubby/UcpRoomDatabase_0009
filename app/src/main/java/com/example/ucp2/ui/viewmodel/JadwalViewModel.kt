@@ -1,6 +1,11 @@
 package com.example.ucp2.ui.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import com.example.ucp2.data.entity.Jadwal
+import com.example.ucp2.repository.RepositoryJadwal
 
 object IDJadwalGenerator {
     private var currentId = 0
@@ -34,4 +39,46 @@ data class FormJadwalErrorState(
     val telepon: String? = null,
     val tanggal: String? = null,
     val status: String? = null
+) {
+    fun isValid(): Boolean {
+        return namaDokter == null && namaPasien == null &&
+                telepon == null && tanggal == null && status == null
+    }
+}
+
+data class JadwalUIState(
+    val jadwalEvent: JadwalEvent = JadwalEvent(),
+    val isEntryValid: FormJadwalErrorState = FormJadwalErrorState(),
+    val snackbarMessage: String? = null
 )
+
+class JadwalViewModel(
+    private val repositoryJadwal: RepositoryJadwal
+) : ViewModel() {
+
+    var uiState: JadwalUIState by mutableStateOf(JadwalUIState())
+
+    fun updateState(jadwalEvent: JadwalEvent) {
+        uiState = uiState.copy(
+            jadwalEvent = jadwalEvent
+        )
+    }
+
+    private fun validateInput(): Boolean {
+        val event = uiState.jadwalEvent
+        val errorState = FormJadwalErrorState(
+            namaDokter = if (event.namaDokter.isEmpty()) "Nama Dokter Tidak Boleh Kosong" else null,
+            namaPasien = if (event.namaPasien.isEmpty()) "Nama Pasien Tidak Boleh Kosong" else null,
+            telepon = if (event.telepon.isEmpty()) "Telepon Tidak Boleh Kosong" else null,
+            tanggal = if (event.tanggal.isEmpty()) "Tanggal Tidak Boleh Kosong" else null,
+            status = if (event.status.isEmpty()) "Status Tidak Boleh Kosong" else null
+        )
+
+        uiState = uiState.copy(
+            isEntryValid = errorState
+        )
+
+        return errorState.isValid()
+    }
+}
+

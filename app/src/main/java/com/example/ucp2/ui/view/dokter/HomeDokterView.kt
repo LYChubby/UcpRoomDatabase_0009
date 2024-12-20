@@ -1,24 +1,40 @@
 package com.example.ucp2.ui.view.dokter
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -30,10 +46,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ucp2.R
 import com.example.ucp2.data.entity.Dokter
 import com.example.ucp2.ui.customwidget.TopAppBar
 import com.example.ucp2.ui.viewmodel.HomeAppViewModel
@@ -189,35 +209,121 @@ fun HomeDokterView(
     onCardClick: (String) -> Unit = { },
     modifier: Modifier = Modifier
 ) {
-    Scaffold (
+    Scaffold(
         modifier = modifier,
-        topBar = {
-            TopAppBar(
-                onBack = { },
-                showBackButton = false,
-                judul = "Daftar Dokter"
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddDokter,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(16.dp)
+    ) { innerPadding ->
+
+        Column(
+            modifier = Modifier
+                .background(color = Color(0xFFFF6F61))
+                .fillMaxWidth()
+        ) {
+            // Header Section
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Image(
+                    painter = painterResource(R.drawable.fri),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, Color.White, CircleShape)
+                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Hi, Fauzi Taufik",
+                        color = Color.White
+                    )
+                    Text(
+                        text = "Selamat Datang Di DisneyMedical",
+                        color = Color.White
+                    )
+                }
                 Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Tambah Dokter"
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Notification Icon",
+                    tint = Color.White
+                )
+            }
+
+            // Search Box
+            OutlinedTextField(
+                value = "",
+                onValueChange = { /* Tambahkan aksi */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(color = Color.White),
+                placeholder = { Text(text = "Cari Dokter") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color.Transparent,
+                    unfocusedBorderColor = Color.Transparent
+                )
+            )
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Button(
+                    onClick = { onAddDokter() },
+                    modifier = Modifier.weight(0.5f)
+                        .padding(end = 5.dp)
+                ) {
+                    Text(text = "Tambah Dokter")
+                }
+                Button(
+                    onClick = { onAddDokter() },
+                    modifier = Modifier.weight(0.5f)
+                        .padding(start = 5.dp)
+                ) {
+                    Text(text = "Lihat Jadwal")
+                }
+
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Column(
+                modifier = Modifier.fillMaxSize()
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                    .background(color = Color.White)
+                    .padding(16.dp)
+            ) {
+
+                Text(text = "Pilih Dokter Yang Anda Inginkan", fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp)
+                Text(text = "Dokter Kami Siap Melayani Anda",  fontSize = 13.sp,
+                    fontWeight = FontWeight.Thin)
+
+                Spacer(modifier = Modifier.size(10.dp))
+
+                // Body Content
+                val homeUiState by viewModel.homeUiState.collectAsState()
+
+                BodyHomeDokterView(
+                    homeUiState = homeUiState,
+                    onCardClick = { onCardClick(it) },
+                    modifier = Modifier.padding(innerPadding)
                 )
             }
         }
-    ){
-        innerPadding ->
-        val homeUiState by viewModel.homeUiState.collectAsState()
-
-        BodyHomeDokterView(
-            homeUiState = homeUiState,
-            onCardClick = { onCardClick(it) },
-            modifier = Modifier.padding(innerPadding)
-        )
     }
 }

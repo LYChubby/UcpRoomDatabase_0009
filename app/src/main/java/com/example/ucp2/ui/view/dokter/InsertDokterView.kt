@@ -42,7 +42,6 @@ fun FormDokter(
 ){
 
     var choosenDropdown by remember { mutableStateOf("") }
-    var listSpesialis = mutableListOf(choosenDropdown)
     Column (
         modifier = modifier.fillMaxWidth()
     ){
@@ -66,7 +65,7 @@ fun FormDokter(
             options = Spesialis.option,
             label = "Spesialis",
             onValueChangedEvent = {
-                choosenDropdown = it
+                onValueChange(dokterEvent.copy(spesialis = it))
             }
         )
 
@@ -123,12 +122,12 @@ fun InsertBodyDokter(
     onValueChange: (DokterEvent) -> Unit,
     uiState: DokterUIState,
     onSaveClick: () -> Unit
-){
-    Column (
+) {
+    Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         FormDokter(
             dokterEvent = uiState.dokterEvent,
             onValueChange = onValueChange,
@@ -136,13 +135,14 @@ fun InsertBodyDokter(
             modifier = modifier.fillMaxWidth()
         )
         Button(
-            onClick = onSaveClick,
+            onClick = { onSaveClick() },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Simpan")
         }
     }
 }
+
 
 object DestinasiInsertDokter : AlamatNavigasi {
     override val route = "insert_dokter"

@@ -37,7 +37,6 @@ fun DokterEvent.toDokterEntity(): Dokter = Dokter (
 )
 
 data class FormErrorState(
-    val id: Int? = null,
     val nama: String? = null,
     val spesialis: String? = null,
     val klinik: String? = null,
@@ -45,7 +44,7 @@ data class FormErrorState(
     val jamKerja: String? = null
 ) {
     fun isValid(): Boolean {
-        return id == null && nama == null && spesialis == null &&
+        return nama == null && spesialis == null &&
                 klinik == null && telepon == null && jamKerja == null
     }
 }

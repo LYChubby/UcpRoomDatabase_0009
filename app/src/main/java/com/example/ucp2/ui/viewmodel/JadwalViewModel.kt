@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.Jadwal
 import com.example.ucp2.repository.RepositoryJadwal
+import kotlinx.coroutines.launch
 
 object IDJadwalGenerator {
     private var currentId = 0
@@ -79,6 +81,31 @@ class JadwalViewModel(
         )
 
         return errorState.isValid()
+    }
+
+    fun saveJadwal() {
+        val currentJadwalEvent = uiState.jadwalEvent
+
+        if (validateInput()) {
+            viewModelScope.launch {
+                try {
+                    repositoryJadwal.insertJadwal(currentJadwalEvent.toJadwalEntity())
+                    uiState = uiState.copy(
+                        jadwalEvent = JadwalEvent(),
+                        isEntryValid = FormJadwalErrorState(),
+                        snackbarMessage = "Jadwal Berhasil Disimpan"
+                    )
+                } catch (e: Exception) {
+                    uiState = uiState.copy(
+                        snackbarMessage = "Jadwal Gagal Disimpan"
+                    )
+                }
+            }
+        } else {
+            uiState = uiState.copy(
+                snackbarMessage = "Input Tidak Valid. Periksa Kembali Data Anda"
+            )
+        }
     }
 }
 

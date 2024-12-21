@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
@@ -70,54 +71,58 @@ fun CardJadwal(
             .fillMaxWidth()
             .padding(8.dp),
         onClick = onDetailClick
-    ) {
-        Column (
-            modifier = Modifier.padding(8.dp)
-
+    ){
+        Row (
+            modifier = Modifier.fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ){
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Icon(
-                    imageVector = Icons.Filled.Person,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
+            Icon(
+                imageVector = Icons.Filled.Person,
+                modifier = Modifier.size(60.dp),
+                contentDescription = ""
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Column (
+                verticalArrangement = Arrangement.Center
+            ) {
+
                 Text(
                     text = jadwal.namaPasien,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
                 )
-            }
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Icon(
-                    imageVector = Icons.Filled.Person,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = jadwal.namaDokter,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-            }
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Icon(
-                    imageVector = Icons.Filled.DateRange,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = jadwal.tanggal,
-                    fontWeight = FontWeight.Bold,
-                )
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = ""
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text(
+                        text = jadwal.namaDokter,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        imageVector = Icons.Filled.DateRange,
+                        contentDescription = ""
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text(
+                        text = jadwal.tanggal,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

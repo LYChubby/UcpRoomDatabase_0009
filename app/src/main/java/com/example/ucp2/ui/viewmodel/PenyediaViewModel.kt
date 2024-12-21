@@ -19,6 +19,16 @@ object PenyediaViewModel  {
                 kesehatanApp().dokterApp.repositoryDokter
             )
         }
+        initializer {
+            JadwalViewModel(
+                kesehatanApp().jadwalApp.repositoryJadwal
+            )
+        }
+        initializer {
+            JadwalAppViewModel(
+                kesehatanApp().jadwalApp.repositoryJadwal
+            )
+        }
     }
 }
 

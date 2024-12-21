@@ -12,20 +12,19 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.navigation.AlamatNavigasi
-import com.example.ucp2.ui.customwidget.DynamicSelectedField
+import com.example.ucp2.ui.customwidget.DynamicSelectedDokter
 import com.example.ucp2.ui.customwidget.TopAppBar
-import com.example.ucp2.ui.viewmodel.DokterEvent
+import com.example.ucp2.ui.viewmodel.DokterViewModel
 import com.example.ucp2.ui.viewmodel.FormJadwalErrorState
 import com.example.ucp2.ui.viewmodel.JadwalEvent
 import com.example.ucp2.ui.viewmodel.JadwalUIState
@@ -36,12 +35,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun FormJadwal(
     jadwalEvent: JadwalEvent = JadwalEvent(),
-    dokterEvent: DokterEvent = DokterEvent(),
     onValueChange: (JadwalEvent) -> Unit = { },
+    dokterViewModel: DokterViewModel,
     errorState: FormJadwalErrorState = FormJadwalErrorState(),
     modifier: Modifier = Modifier
 ) {
 
+    val namaDokterList by dokterViewModel.dokterNames.collectAsState()
     Column (
         modifier = modifier.fillMaxWidth()
     ){
@@ -60,10 +60,10 @@ fun FormJadwal(
             color = Color.Red
         )
 
-        DynamicSelectedField(
+        DynamicSelectedDokter(
             selectedValue = jadwalEvent.namaDokter,
-            options = dokterEvent.nama,
-            label = "Spesialis",
+            options = namaDokterList,
+            label = "Nama Dokter",
             onValueChangedEvent = {
                 onValueChange(jadwalEvent.copy(namaDokter = it))
             }
@@ -131,6 +131,7 @@ fun InsertBodyJadwal(
         FormJadwal(
             jadwalEvent = uiState.jadwalEvent,
             onValueChange = onValueChange,
+            dokterViewModel = viewModel(factory = PenyediaViewModel.Factory),
             errorState = uiState.isEntryValid,
             modifier = modifier.fillMaxWidth()
         )

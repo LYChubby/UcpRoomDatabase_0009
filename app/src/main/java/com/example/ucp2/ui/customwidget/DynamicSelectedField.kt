@@ -20,7 +20,7 @@ import com.example.ucp2.data.Spesialis.option
 @Composable
 fun DynamicSelectedField(
     selectedValue: String,
-    options: String,
+    options: List<String>,
     label: String,
     onValueChangedEvent: (String) -> Unit,
     modifier: Modifier = Modifier

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.Dokter
 import com.example.ucp2.repository.RepositoryDokter
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
@@ -58,6 +60,18 @@ data class DokterUIState(
 class DokterViewModel(
     private val repositoryDokter: RepositoryDokter
 ): ViewModel() {
+
+    private val _dokterNames = MutableStateFlow<List<String>>(emptyList())
+    val dokterNames: StateFlow<List<String>> = _dokterNames
+
+    init {
+        viewModelScope.launch {
+            repositoryDokter.getAllDokter()
+                .collect { dokterList ->
+                    _dokterNames.value = dokterList.map { it.nama }
+                }
+        }
+    }
 
     var uiState: DokterUIState by mutableStateOf(DokterUIState())
 

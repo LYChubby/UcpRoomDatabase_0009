@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 
-data class JadwalUiState(
-    val listJadwal: List<Jadwal> = listOf(),
+data class JadwalHomeUiState(
+    val jadwalList: List<Jadwal> = listOf(),
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val errorMessage: String = "",
@@ -24,21 +24,21 @@ data class JadwalAppViewModel(
     private val jadwalRepository: RepositoryJadwal
 ): ViewModel() {
 
-    val jadwalUiState: StateFlow<JadwalUiState> = jadwalRepository.getAllJadwal()
+    val jadwalUiState: StateFlow<JadwalHomeUiState> = jadwalRepository.getAllJadwal()
         .filterNotNull()
         .map {
-            JadwalUiState(
-                listJadwal = it.toList(),
+            JadwalHomeUiState(
+                jadwalList = it.toList(),
                 isLoading = false
             )
         }
         .onStart {
-            emit(JadwalUiState(isLoading = true))
+            emit(JadwalHomeUiState(isLoading = true))
             delay(900)
         }
         .catch {
             emit(
-                JadwalUiState(
+                JadwalHomeUiState(
                     isLoading = false,
                     isError = true,
                     errorMessage = it.message ?: "Terjadi Kesalahan"
@@ -48,7 +48,7 @@ data class JadwalAppViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = JadwalUiState(
+            initialValue = JadwalHomeUiState(
                 isLoading = true
             )
         )

@@ -75,60 +75,64 @@ fun CardDokter (
             .padding(8.dp),
         onClick = onCardClick
     ){
-        Column (
-            modifier = Modifier.padding(8.dp)
+        Row (
+            modifier = Modifier.fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ){
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Icon(
-                    imageVector = Icons.Filled.Person,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
+            Icon(
+                imageVector = Icons.Filled.Person,
+                modifier = Modifier.size(60.dp),
+                contentDescription = ""
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Column (
+                verticalArrangement = Arrangement.Center
+            ) {
+
                 Text(
                     text = dokter.nama,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
-            }
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Icon(
-                    imageVector = Icons.Filled.AccountBox,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = dokter.spesialis,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = when (dokter.spesialis) {
-                        "Dokter Gigi" -> Color.Yellow
-                        "Dokter Jantung" -> Color.Red
-                        "Dokter Mata" -> Color.Green
-                        "Dokter Kecantikan" -> Color.Blue
-                        else -> Color.Black
-                    }
-                )
-            }
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Icon(
-                    imageVector = Icons.Filled.DateRange,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = dokter.jamKerja,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        imageVector = Icons.Filled.AccountBox,
+                        contentDescription = ""
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text(
+                        text = dokter.spesialis,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = when (dokter.spesialis) {
+                            "Dokter Gigi" -> Color.Yellow
+                            "Dokter Jantung" -> Color.Red
+                            "Dokter Mata" -> Color.Green
+                            "Dokter Kecantikan" -> Color.Blue
+                            else -> Color.Black
+                        }
+                    )
+                }
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        imageVector = Icons.Filled.DateRange,
+                        contentDescription = ""
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text(
+                        text = dokter.jamKerja,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

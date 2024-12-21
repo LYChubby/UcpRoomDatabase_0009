@@ -54,7 +54,7 @@ import com.example.ucp2.R
 import com.example.ucp2.data.entity.Jadwal
 import com.example.ucp2.ui.view.dokter.BodyHomeDokterView
 import com.example.ucp2.ui.viewmodel.JadwalAppViewModel
-import com.example.ucp2.ui.viewmodel.JadwalUiState
+import com.example.ucp2.ui.viewmodel.JadwalHomeUiState
 import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 
@@ -95,7 +95,7 @@ fun CardJadwal(
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Icon(
-                    imageVector = Icons.Filled.DateRange,
+                    imageVector = Icons.Filled.Person,
                     contentDescription = ""
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -110,7 +110,7 @@ fun CardJadwal(
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Icon(
-                    imageVector = Icons.Filled.Home,
+                    imageVector = Icons.Filled.DateRange,
                     contentDescription = ""
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -146,7 +146,7 @@ fun ListJadwal(
 
 @Composable
 fun BodyHomeJadwalView(
-    jadwalUiState: JadwalUiState,
+    jadwalUiState: JadwalHomeUiState,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit
 ){
@@ -172,7 +172,7 @@ fun BodyHomeJadwalView(
             }
         }
 
-        jadwalUiState.listJadwal.isEmpty() -> {
+        jadwalUiState.jadwalList.isEmpty() -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -188,7 +188,7 @@ fun BodyHomeJadwalView(
 
         else -> {
             ListJadwal(
-                jadwalList = jadwalUiState.listJadwal,
+                jadwalList = jadwalUiState.jadwalList,
                 onDetailClick = {
                     onDetailClick(it)
                     println(it)
@@ -308,7 +308,7 @@ fun HomeJadwalView(
                     .padding(16.dp)
             ) {
 
-                Text(text = "Pilih Dokter Yang Anda Inginkan", fontWeight = FontWeight.Bold,
+                Text(text = "Buat Jadwal Untuk Dokter", fontWeight = FontWeight.Bold,
                     fontSize = 20.sp)
                 Text(text = "Dokter Kami Siap Melayani Anda",  fontSize = 13.sp,
                     fontWeight = FontWeight.Thin)

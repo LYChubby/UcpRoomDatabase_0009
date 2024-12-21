@@ -28,6 +28,8 @@ fun PengelolaHalaman(
                 },
                 onAddDokter = { navController.navigate(DestinasiInsertDokter.route)
                 },
+                onJadwal = { navController.navigate(DestinasiJadwal.route)
+                },
                 modifier = modifier
             )
         }
@@ -49,41 +51,18 @@ fun PengelolaHalaman(
         composable(
             route = DestinasiJadwal.route
         ) {
-            HomeDokterView(
-                onCardClick = {
-//                    navController.navigate(DestinasiDetail.route)
-                },
-                onJadwal = { navController.navigate(DestinasiJadwal.route)
-                },
-                modifier = modifier
-            )
-        }
-
-        composable(
-            route = DestinasiHome.route
-        ) {
-            HomeJadwalView(
-                onDetailClick = {
-//                    navController.navigate(DestinasiDetail.route)
-                },
-                onAddJadwal = { navController.navigate(DestinasiHome.route)
-                },
-                modifier = modifier
-            )
-        }
-
-        composable(
-            route = DestinasiJadwal.route
-        ) {
             HomeJadwalView(
                 onDetailClick = {
 //                    navController.navigate(DestinasiDetail.route)
                 },
                 onAddJadwal = { navController.navigate(DestinasiInsertJadwal.route)
                 },
+                onDokter = { navController.navigate(DestinasiHome.route)
+                },
                 modifier = modifier
             )
         }
+
 
         composable(
             route = DestinasiInsertJadwal.route

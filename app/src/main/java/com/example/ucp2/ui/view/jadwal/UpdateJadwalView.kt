@@ -29,7 +29,7 @@ fun UpdateJadwalView(
     modifier: Modifier = Modifier,
     viewModel: UpdateJadwalViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
-    val jadwalUiState = viewModel.updateJadwalUiState
+    val jadwalUiState = viewModel.updateJadwalUIState
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 

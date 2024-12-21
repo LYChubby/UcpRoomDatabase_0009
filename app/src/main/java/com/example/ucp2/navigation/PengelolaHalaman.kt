@@ -53,22 +53,6 @@ fun PengelolaHalaman(
         }
 
         composable(
-            route = DestinasiJadwal.route
-        ) {
-            HomeJadwalView(
-                onDetailClick = {
-//                    navController.navigate(DestinasiDetail.route)
-                },
-                onAddJadwal = { navController.navigate(DestinasiInsertJadwal.route)
-                },
-                onDokter = { navController.navigate(DestinasiHome.route)
-                },
-                modifier = modifier
-            )
-        }
-
-
-        composable(
             route = DestinasiInsertJadwal.route
         ) {
             InsertJadwalView(
@@ -83,14 +67,32 @@ fun PengelolaHalaman(
         }
 
         composable(
+            route = DestinasiJadwal.route
+        ) {
+            HomeJadwalView(
+                onDetailClick = { id ->
+                    navController.navigate("${DestinasiDetailJadwal.route}/$id")
+                    println(
+                        "PengelolaHalaman: id = $id"
+                    )
+                },
+                onAddJadwal = { navController.navigate(DestinasiInsertJadwal.route)
+                },
+                onDokter = { navController.navigate(DestinasiHome.route)
+                },
+                modifier = modifier
+            )
+        }
+
+        composable(
             DestinasiDetailJadwal.routeWithArgs,
             arguments = listOf(
                 navArgument(DestinasiDetailJadwal.ID) {
-                    type = NavType.StringType
+                    type = NavType.IntType
                 }
             )
         ) {
-            val id = it.arguments?.getString(DestinasiDetailJadwal.ID)
+            val id = it.arguments?.getInt(DestinasiDetailJadwal.ID)
             id?.let { id ->
                 DetailJadwalView(
                     onBack = {
@@ -111,7 +113,7 @@ fun PengelolaHalaman(
             DestinasiEditJadwal.routeWithArgs,
             arguments = listOf(
                 navArgument(DestinasiEditJadwal.ID) {
-                    type = NavType.StringType
+                    type = NavType.IntType
                 }
             )
         ) {

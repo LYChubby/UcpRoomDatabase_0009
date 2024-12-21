@@ -6,8 +6,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.ucp2.KesehatanApp
-import com.example.ucp2.ui.view.jadwal.DetailJadwalView
-import com.example.ucp2.ui.view.jadwal.UpdateJadwalView
 
 object PenyediaViewModel  {
 

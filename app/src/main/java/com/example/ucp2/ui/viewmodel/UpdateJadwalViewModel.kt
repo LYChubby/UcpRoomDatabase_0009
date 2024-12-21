@@ -18,14 +18,14 @@ class UpdateJadwalViewModel(
     private val repositoryJadwal: RepositoryJadwal
 ): ViewModel() {
 
-    var updateJadwalUiState by mutableStateOf(JadwalUIState())
+    var updateJadwalUIState by mutableStateOf(JadwalUIState())
         private set
 
     private val _id: Int = checkNotNull(savedStateHandle[DestinasiEditJadwal.ID])
 
     init {
         viewModelScope.launch {
-            updateJadwalUiState = repositoryJadwal.getJadwal(_id)
+            updateJadwalUIState = repositoryJadwal.getJadwal(_id)
                 .filterNotNull()
                 .first()
                 .toUIStateJadwal()
@@ -33,13 +33,13 @@ class UpdateJadwalViewModel(
     }
 
     fun updateJadwal(jadwalEvent: JadwalEvent) {
-        updateJadwalUiState = updateJadwalUiState.copy(
+        updateJadwalUIState = updateJadwalUIState.copy(
             jadwalEvent = jadwalEvent
         )
     }
 
     fun validateInput(): Boolean {
-        val event = updateJadwalUiState.jadwalEvent
+        val event = updateJadwalUIState.jadwalEvent
         val errorState = FormJadwalErrorState(
             namaPasien = if (event.namaPasien.isNotEmpty()) null else "Nama pasien tidak boleh kosong",
             namaDokter = if (event.namaDokter.isNotEmpty()) null else "Nama dokter tidak boleh kosong",
@@ -47,38 +47,38 @@ class UpdateJadwalViewModel(
             tanggal = if (event.tanggal.isNotEmpty()) null else "Tanggal tidak boleh kosong",
             status = if (event.status.isNotEmpty()) null else "Status tidak boleh kosong"
         )
-        updateJadwalUiState = updateJadwalUiState.copy(isEntryValid = errorState)
+        updateJadwalUIState = updateJadwalUIState.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
 
     fun updateJadwal() {
-        val currentJadwal = updateJadwalUiState.jadwalEvent
+        val currentJadwal = updateJadwalUIState.jadwalEvent
 
         if (validateInput()) {
             viewModelScope.launch {
                 try {
                     repositoryJadwal.updateJadwal(currentJadwal.toJadwalEntity())
-                    updateJadwalUiState = updateJadwalUiState.copy(
+                    updateJadwalUIState = updateJadwalUIState.copy(
                         snackbarMessage = "Jadwal Berhasil Di Update",
                         jadwalEvent = JadwalEvent(),
                         isEntryValid = FormJadwalErrorState()
                     )
-                    println("snackBarMessage Diatur: ${updateJadwalUiState.snackbarMessage}")
+                    println("snackBarMessage Diatur: ${updateJadwalUIState.snackbarMessage}")
                 } catch (e: Exception) {
-                    updateJadwalUiState = updateJadwalUiState.copy(
+                    updateJadwalUIState = updateJadwalUIState.copy(
                         snackbarMessage = "Jadwal Gagal Diupdate"
                     )
                 }
             }
         } else {
-            updateJadwalUiState = updateJadwalUiState.copy(
+            updateJadwalUIState = updateJadwalUIState.copy(
                 snackbarMessage = "Jadwal Gagal Diupdate"
             )
         }
     }
 
     fun resetSnackbarMessage() {
-        updateJadwalUiState = updateJadwalUiState.copy(
+        updateJadwalUIState = updateJadwalUIState.copy(
             snackbarMessage = null
         )
     }

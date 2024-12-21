@@ -18,9 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -53,7 +51,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.R
 import com.example.ucp2.data.entity.Jadwal
-import com.example.ucp2.ui.view.dokter.BodyHomeDokterView
 import com.example.ucp2.ui.viewmodel.JadwalAppViewModel
 import com.example.ucp2.ui.viewmodel.JadwalHomeUiState
 import com.example.ucp2.ui.viewmodel.PenyediaViewModel

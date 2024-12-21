@@ -1,10 +1,13 @@
 package com.example.ucp2.ui.viewmodel
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.ucp2.KesehatanApp
+import com.example.ucp2.ui.view.jadwal.DetailJadwalView
+import com.example.ucp2.ui.view.jadwal.UpdateJadwalView
 
 object PenyediaViewModel  {
 
@@ -26,6 +29,20 @@ object PenyediaViewModel  {
         }
         initializer {
             JadwalAppViewModel(
+                kesehatanApp().jadwalApp.repositoryJadwal
+            )
+        }
+
+        initializer {
+            DetailJadwalViewModel(
+                createSavedStateHandle(),
+                kesehatanApp().jadwalApp.repositoryJadwal
+            )
+        }
+
+        initializer {
+            UpdateJadwalViewModel(
+                createSavedStateHandle(),
                 kesehatanApp().jadwalApp.repositoryJadwal
             )
         }

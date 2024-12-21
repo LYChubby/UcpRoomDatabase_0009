@@ -18,3 +18,9 @@ object DestinasiDetailJadwal : AlamatNavigasi {
     const val ID = "id"
     val routeWithArgs = "$route/{$ID}"
 }
+
+object DestinasiEditJadwal : AlamatNavigasi {
+    override val route = "editJadwal"
+    const val ID = "id"
+    val routeWithArgs = "$route/{$ID}"
+}

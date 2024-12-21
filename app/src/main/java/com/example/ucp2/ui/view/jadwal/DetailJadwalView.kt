@@ -6,15 +6,21 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -26,8 +32,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Jadwal
+import com.example.ucp2.ui.customwidget.TopAppBar
 import com.example.ucp2.ui.viewmodel.DetailJadwalUiState
+import com.example.ucp2.ui.viewmodel.DetailJadwalViewModel
+import com.example.ucp2.ui.viewmodel.DokterViewModel
+import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import com.example.ucp2.ui.viewmodel.toJadwalEntity
 
 @Composable
@@ -170,5 +181,49 @@ fun BodyDetailJadwal(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun DetailJadwalView(
+    modifier: Modifier = Modifier,
+    viewModel: DetailJadwalViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    onBack: () -> Unit = {  },
+    onEditClick: (String) -> Unit = {  },
+    onDeleteClick: () -> Unit = {  }
+) {
+    Scaffold (
+        modifier = Modifier,
+        topBar = {
+            TopAppBar(
+                judul = "Detail Jadwal",
+                showBackButton = true,
+                onBack = onBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onEditClick(viewModel.detailJadwalUiState.value.detailJadwalUiEvent.id.toString()) },
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Jadwal"
+                )
+            }
+        }
+    ){
+        innerPadding ->
+        val detailJadwalUiState by viewModel.detailJadwalUiState.collectAsState()
+
+        BodyDetailJadwal(
+            modifier = modifier.padding(innerPadding),
+            detailJadwalUiState = detailJadwalUiState,
+            onDeleteClick = {
+                viewModel.deleteJadwal()
+                onDeleteClick()
+            }
+        )
     }
 }

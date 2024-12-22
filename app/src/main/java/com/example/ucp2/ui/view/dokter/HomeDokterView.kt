@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -281,6 +282,12 @@ fun HomeDokterView(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.QrCodeScanner,
                         contentDescription = "Search Icon"
                     )
                 },

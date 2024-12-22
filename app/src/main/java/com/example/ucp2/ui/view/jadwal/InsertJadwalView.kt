@@ -4,7 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -52,6 +60,12 @@ fun FormJadwal(
                 onValueChange(jadwalEvent.copy(namaPasien = it))
             },
             label = { Text(text = "Nama Pasien") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null
+                )
+            },
             isError = errorState.namaPasien != null,
             placeholder = { Text(text = "Masukkan Nama Pasien") }
         )
@@ -64,6 +78,12 @@ fun FormJadwal(
             selectedValue = jadwalEvent.namaDokter,
             options = namaDokterList,
             label = "Nama Dokter",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null
+                )
+            },
             onValueChangedEvent = {
                 onValueChange(jadwalEvent.copy(namaDokter = it))
             }
@@ -76,6 +96,12 @@ fun FormJadwal(
                 onValueChange(jadwalEvent.copy(telepon = it))
             },
             label = { Text(text = "No Hp") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null
+                )
+            },
             isError = errorState.telepon != null,
             placeholder = { Text(text = "Masukkan No Hp") }
         )
@@ -91,6 +117,12 @@ fun FormJadwal(
                 onValueChange(jadwalEvent.copy(tanggal = it))
             },
             label = { Text(text = "Tanggal") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.DateRange,
+                    contentDescription = null
+                )
+            },
             isError = errorState.tanggal != null,
             placeholder = { Text(text = "Masukkan Tanggal Konsultasi") }
         )
@@ -106,6 +138,12 @@ fun FormJadwal(
                 onValueChange(jadwalEvent.copy(status = it))
             },
             label = { Text(text = "Status") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.CheckCircle,
+                    contentDescription = null
+                )
+            },
             isError = errorState.status != null,
             placeholder = { Text(text = "Masukkan Status") }
         )

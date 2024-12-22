@@ -19,9 +19,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -101,7 +103,7 @@ fun CardDokter (
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Icon(
-                        imageVector = Icons.Filled.AccountBox,
+                        imageVector = Icons.Filled.MedicalServices,
                         contentDescription = ""
                     )
                     Spacer(modifier = Modifier.padding(4.dp))
@@ -123,7 +125,7 @@ fun CardDokter (
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Icon(
-                        imageVector = Icons.Filled.DateRange,
+                        imageVector = Icons.Filled.AccessTime,
                         contentDescription = ""
                     )
                     Spacer(modifier = Modifier.padding(4.dp))

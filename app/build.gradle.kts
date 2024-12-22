@@ -68,6 +68,7 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation("androidx.compose.material:material-icons-extended:<latest-version>")
 
     implementation("androidx.room:room-runtime:2.6.0")
     ksp("androidx.room:room-compiler:2.5.2")

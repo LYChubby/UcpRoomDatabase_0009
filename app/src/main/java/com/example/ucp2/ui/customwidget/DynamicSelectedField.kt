@@ -22,6 +22,7 @@ fun DynamicSelectedField(
     selectedValue: String,
     options: List<String>,
     label: String,
+    leadingIcon: @Composable (() -> Unit)? = null,
     onValueChangedEvent: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -37,6 +38,7 @@ fun DynamicSelectedField(
             value = selectedValue,
             onValueChange = {},
             label = { Text(text = label) },
+            leadingIcon = leadingIcon,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded

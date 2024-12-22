@@ -21,6 +21,7 @@ fun DynamicSelectedDokter(
     selectedValue: String,
     options: List<String>,
     label: String,
+    leadingIcon: @Composable (() -> Unit)? = null,
     onValueChangedEvent: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -36,6 +37,7 @@ fun DynamicSelectedDokter(
             value = selectedValue,
             onValueChange = {},
             label = { Text(text = label) },
+            leadingIcon = leadingIcon,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },

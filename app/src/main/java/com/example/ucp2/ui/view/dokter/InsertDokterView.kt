@@ -4,7 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -48,6 +55,12 @@ fun FormDokter(
                 onValueChange(dokterEvent.copy(nama = it))
             },
             label = { Text(text = "Nama Dokter") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null
+                )
+            },
             isError = errorState.nama != null,
             placeholder = { Text(text = "Masukkan Nama Dokter")}
         )
@@ -60,6 +73,12 @@ fun FormDokter(
             selectedValue = dokterEvent.spesialis,
             options = Spesialis.option,
             label = "Spesialis",
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.MedicalServices,
+                    contentDescription = null
+                )
+            },
             onValueChangedEvent = {
                 onValueChange(dokterEvent.copy(spesialis = it))
             }
@@ -72,6 +91,12 @@ fun FormDokter(
                 onValueChange(dokterEvent.copy(klinik = it))
             },
             label = { Text(text = "Nama Klinik") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = null
+                )
+            },
             isError = errorState.klinik != null,
             placeholder = { Text(text = "Masukkan Nama Klinik")}
         )
@@ -87,6 +112,12 @@ fun FormDokter(
                 onValueChange(dokterEvent.copy(telepon = it))
             },
             label = { Text(text = "No Hp") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null
+                )
+            },
             isError = errorState.telepon != null,
             placeholder = { Text(text = "Masukkan No Hp")}
         )
@@ -102,6 +133,12 @@ fun FormDokter(
                 onValueChange(dokterEvent.copy(jamKerja = it))
             },
             label = { Text(text = "Jam Kerja") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.AccessTime,
+                    contentDescription = null
+                )
+            },
             isError = errorState.nama != null,
             placeholder = { Text(text = "Masukkan Jam Kerja")}
         )

@@ -191,7 +191,7 @@ fun DetailJadwalView(
     onDeleteClick: () -> Unit = {  }
 ) {
     Scaffold (
-        modifier = Modifier,
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 judul = "Detail Jadwal",

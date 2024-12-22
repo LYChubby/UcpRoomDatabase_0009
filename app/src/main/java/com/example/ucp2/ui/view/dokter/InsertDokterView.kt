@@ -2,8 +2,10 @@ package com.example.ucp2.ui.view.dokter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Home
@@ -83,6 +85,8 @@ fun FormDokter(
                 onValueChange(dokterEvent.copy(spesialis = it))
             }
         )
+
+        Spacer(modifier = Modifier.size(20.dp))
 
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
@@ -203,7 +207,14 @@ fun InsertDokterView(
 
     Scaffold (
         modifier = modifier,
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        topBar = {
+            TopAppBar(
+                onBack = onBack,
+                showBackButton = true,
+                judul = "Tambah Dokter"
+            )
+        },
     ){
         padding ->
         Column (
@@ -211,11 +222,6 @@ fun InsertDokterView(
                 .padding(padding)
                 .padding(16.dp)
         ){
-            TopAppBar(
-                onBack = onBack,
-                showBackButton = true,
-                judul = "Tambah Dokter"
-            )
             InsertBodyDokter(
                 uiState = uiState,
                 onValueChange = {updatedEvent ->

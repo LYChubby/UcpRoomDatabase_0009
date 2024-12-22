@@ -2,8 +2,10 @@ package com.example.ucp2.ui.view.jadwal
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.CheckCircle
@@ -88,6 +90,8 @@ fun FormJadwal(
                 onValueChange(jadwalEvent.copy(namaDokter = it))
             }
         )
+
+        Spacer(modifier = Modifier.size(20.dp))
 
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
@@ -208,7 +212,14 @@ fun InsertJadwalView(
 
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        topBar = {
+            TopAppBar(
+                onBack = onBack,
+                showBackButton = true,
+                judul = "Tambah Jadwal"
+            )
+        },
     ) {
         padding ->
         Column(
@@ -216,12 +227,6 @@ fun InsertJadwalView(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            TopAppBar(
-                onBack = onBack,
-                showBackButton = true,
-                judul = "Tambah Jadwal"
-            )
-
             InsertBodyJadwal(
                 uiState = uiState,
                 onValueChange = { updatedEvent ->

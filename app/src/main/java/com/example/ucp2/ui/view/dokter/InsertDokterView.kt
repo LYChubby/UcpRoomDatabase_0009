@@ -86,7 +86,7 @@ fun FormDokter(
             onValueChange = {
                 onValueChange(dokterEvent.copy(telepon = it))
             },
-            label = { Text(text = "No Hpr") },
+            label = { Text(text = "No Hp") },
             isError = errorState.telepon != null,
             placeholder = { Text(text = "Masukkan No Hp")}
         )

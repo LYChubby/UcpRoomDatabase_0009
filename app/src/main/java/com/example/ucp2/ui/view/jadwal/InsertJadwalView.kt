@@ -92,7 +92,7 @@ fun FormJadwal(
             },
             label = { Text(text = "Tanggal") },
             isError = errorState.tanggal != null,
-            placeholder = { Text(text = "Masukkan Tanggal") }
+            placeholder = { Text(text = "Masukkan Tanggal Konsultasi") }
         )
         Text(
             text = errorState.tanggal ?: "",

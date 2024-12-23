@@ -53,7 +53,7 @@ fun UpdateJadwalView(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBar(
-                judul = "UEdit Jadwal",
+                judul = "Edit Jadwal",
                 showBackButton = true,
                 onBack = onBack
             )
